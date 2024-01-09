@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import PresentRow from "./PresentRow";
 
 export default function Home() {
   const [presents, setPresents] = useState([
@@ -8,6 +9,10 @@ export default function Home() {
     "Regalo 3",
   ]);
   const [newValue, setNewValue] = useState("");
+
+  const handleClick = (value: string) => {
+    setPresents((prevState) => prevState.filter((item) => item !== value));
+  };
 
   return (
     <main
@@ -53,14 +58,38 @@ export default function Home() {
                 padding: "4px 8px",
                 borderRadius: 8,
               }}
-              onClick={() => setPresents((prev) => [...prev, newValue])}
+              onClick={() => {
+                if (newValue && presents.indexOf(newValue) === -1) {
+                  setPresents((prev) => [...prev, newValue]);
+                }
+              }}
             >
               Agregar
             </button>
           </div>
-          {presents.map((item) => (
-            <p className="text-black">{item}</p>
-          ))}
+          {presents.length ? (
+            presents.map((item) => (
+              <PresentRow onClick={handleClick} item={item} />
+            ))
+          ) : (
+            <div>
+              <p style={{ color: "black" }}>
+                No hay regalos agregados a la lista.
+              </p>
+            </div>
+          )}
+
+          <button
+            onClick={() => setPresents([])}
+            style={{
+              backgroundColor: "#028A0F",
+              padding: "4px 8px",
+              borderRadius: 8,
+              marginTop: 32,
+            }}
+          >
+            Borrar todo
+          </button>
         </div>
       </div>
     </main>
