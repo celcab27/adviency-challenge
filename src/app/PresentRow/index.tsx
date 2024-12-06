@@ -8,7 +8,11 @@ interface PresentRowProps {
   onClick: (value: string) => void;
 }
 
+const DEFAULT_URL =
+  "https://img.freepik.com/premium-vector/christmas-present-box-design-clipart_682021-448.jpg";
+
 export default function PresentRow({ item, onClick }: PresentRowProps) {
+  console.log("ITEM", item, Boolean(item.image));
   return (
     <div
       style={{
@@ -20,7 +24,7 @@ export default function PresentRow({ item, onClick }: PresentRowProps) {
     >
       <div style={{ display: "flex", alignItems: "center" }}>
         <img
-          src={item.image}
+          src={item.image ? item.image : DEFAULT_URL}
           alt="present image"
           width={24}
           height={24}
